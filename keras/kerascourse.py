@@ -1,7 +1,3 @@
-import os
-import numpy as np
-
-
 ###数据结构总结：
 ###提取每一个类型数据的办法：
 
@@ -17,12 +13,10 @@ import numpy as np
 
 ###范数的函数主要看ord的选项，数学建模
 
+import matplotlib.pyplot as plt
 import numpy as np
 from numpy import linalg as la
-import matplotlib.pyplot as plt
-import index
-import symbol
-
+import sympy as sp
 
 a = np.arange(8)-4
 la.norm(a,2)
@@ -106,19 +100,59 @@ class computing():
 
     ###lagrangian 约束优化
     def lagran(x,lamda,alpha):
+        return 0
 
 
-### enumerate
+###enumerate
+ ###   def test(self,x,y):
+
+###可以使用assert,如果出现assert error那么就是正确的了
 
 
-### OLS
+from scipy import *
+
+###OLS  x.transpose() = x.T
+###问题出inv（）函数需要多维数组，并且矩阵不可以使用数组，所以出现问题
+###解决办法就是看如何转换数组的关系。scipy.linalg.det计算的是矩阵的行列式，numpy.linagle.det计算的是数组的行列式
+
+
+###简化一下输入必须为3*3 的矩阵或者是N * N的矩阵： ，numpy.pad 可以为矩阵补充0！！！
+    def ols(x,y):
+        ##assert type(x) == np.matrix
+        ##assert type(y) == np.matrix
+        ###x=np.asmatrix(x).reshape(3,3)
+        ###y=np.asmatrix(y).reshape(3,1)
+        ####n行 n列行列式!=0才有逆矩阵  matrix.reshape 配合scipy.linalg.det后者是array.reshape配合np.linalg.det
+        ###x=data[:,:-1]
+        #assert np.linalg.det(x)!= 0
+        ###n行 1列
+        ###y=np.array(data[:,-1])
+        ###要求满rank ,linalg.matrix_rank()
+        xtest = np.dot(x.T,x)
+        print(xtest)
+        ###if np.linalg.det(xtest)!=0:
+        p=np.linalg.inv(xtest)
+        result=np.dot(np.dot(p,x.T),y)
+        print('结果是',result)
+        return result
+
+
+
+
 
 
 ### MLE
+    def mle(x,y):
+
+        return 0
 
 
 
-###
+###Possiblity:
+    def probability(x):
+        return 0
+
+
 
 
 
@@ -143,10 +177,13 @@ class computing():
 
 
 if __name__ == "__main__":
-    a = np.arange(5, 10) * 8 - 450
+    a = np.arange(0, 2500) * 8 - 450
+    a1 = a.reshape(50,50)
     b = np.arange(50, 55) * 8 - 50
     ###np.matrix竟然不被建议，只能用回ndarray
-    x = np.matrix(np.arange(9).reshape((3, 3)));
+    x = np.matrix(np.arange(81).reshape((9, 9)))
+    y = np.matrix(np.arange(9).reshape((3, 3)))
+
     x1 = np.matrix(np.arange(25),5,5)
     y = np.arange(0,100,5)
     I_x = probability.entropy(8000)
